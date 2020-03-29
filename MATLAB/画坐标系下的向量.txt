@@ -1,0 +1,85 @@
+% p1=[1,0,0];
+% p2=[0,0.1,0.1];
+% 
+% drawO(p1,p2,'b','r')
+
+p1=[3,7,9];
+p2=[-4,3,-1];
+
+drawO(p1,p2,'b','r');
+
+plot3(-1:0.01:1,zeros(1,201),zeros(1,201),'--')
+plot3(zeros(1,201),-1:0.01:1,zeros(1,201),'--')
+plot3(zeros(1,201),zeros(1,201),-1:0.01:1,'--')
+
+function drawO(p1,p2,c,d)
+p3=cross(p1,p2);
+p1=p1./norm(p1);
+p2=p2./norm(p2);
+p3=p3./norm(p3);
+p_=[p1',p2',p3']';
+p4=p_(:,1);
+p5=p_(:,2);
+p6=p_(:,3);
+
+tryY((p1'+p4)/2,'--')
+tryY((p3'+p6)/2,'--')
+tryY((p2'+p5)/2,'--')
+tryY((p1'+p2'+p3')/3,'--')
+tryY((p4+p5+p6)/3,'--')
+tryY((p1'+p2'+p3'+p4+p5+p6)/6,'--')
+
+drawsphere();
+% tryY(p1,c);
+% tryY(p2,c);
+% tryY(p3,c);
+% tryY(p4,d);
+% tryY(p5,d);
+% tryY(p6,d);
+drawmany(p1,p2,c);
+drawmany(p3,p2,c);
+drawmany(p1,p3,c);
+drawmany(p4,p5,d);
+drawmany(p5,p6,d);
+drawmany(p4,p6,d);
+end
+
+function drawmany(p1,p2,s)
+for i=0:0.01:1
+    tryY(p1*i+p2*(1-i),s);
+end
+end
+
+function drawsphere()
+[x,y,z]=sphere(500);
+surf(x,y,z,'FaceColor',"y",'EdgeColor','none','FaceAlpha',0.3,'FaceLighting','gouraud');
+%shading flat
+hold on
+end
+
+function tryY(p,d)
+Norm=norm(p);
+p(1)=p(1)/Norm;
+p(2)=p(2)/Norm;
+p(3)=p(3)/Norm;
+if(p(1)==0)
+    a=zeros(1,101);
+else
+    a=0:p(1)/100:p(1);
+end
+if(p(2)==0)
+    b=zeros(1,101);
+else
+    b=0:p(2)/100:p(2); 
+end    
+if(p(3)==0)
+    c=zeros(1,101);
+else
+    c=0:p(3)/100:p(3);
+end
+plot3(a,b,c,d,'LineWidth',1.5);
+axis([-1,1,-1,1,-1,1])
+
+grid on
+hold on
+end

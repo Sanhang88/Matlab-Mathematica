@@ -1,0 +1,47 @@
+% t = -10*pi:pi/25000:10*pi;
+% x = (cos(2*t).^2).*sin(t);
+% y = (sin(2*t).^2).*cos(t);
+% figure;
+% ax=axes;
+% set(ax,'xlim',[-2 2],'ylim',[-2 2],'zlim',[-10*pi 10*pi]);
+% grid on
+% hold on
+% comet3(gca,x,y,t);
+clc; clear;
+ 
+% peaks是一个函数，其中有2个变量。由平移和放缩高斯分布函数获得。
+% 参数为30，得到的X、Y、Z为30*30的矩阵。
+[X, Y, Z] = peaks(300);
+% surf绘制三维曲面图
+surf(X,Y,Z);
+ 
+axis([-3,3,-3,3,-10,10]);
+% 关闭所用坐标轴上的标记、格栅和单位标记。但保留由text和gtext设置的对象
+%axis off;
+%{
+   shading：是用来处理色彩效果的，分以下三种：
+   1、no shading 一般的默认模式 即shading faceted
+   2、shading flat 在faceted的基础上去掉图上的网格线
+   3、shading interp 在flat的基础上进行色彩的插值处理，使色彩平滑过渡
+%}
+shading interp;
+%{
+   colormap：设定和获取当前的色图。
+   1、colormap(map)：设置颜色图为矩阵map。如果map中的任何值在区间[0,1]之外，MATLAB返回错误。
+   2、colormap('default')：将当前的颜色图设置为默认的颜色图。
+   3、cmap=colormap：返回当前的颜色图。返回的值都在区间[0,1]内。
+   map是一个3列矩阵，其元素数值定义在区间[0,1]。矩阵的每行元素表示1一个真色彩向量，即红、绿、蓝3基色的系数。
+   hot为matlab中预定义的色图样式中的一种，表示：黑、红、黄、白色浓淡交错。
+%}
+colormap(hot);
+ 
+% 建立一个20列的大矩阵
+M = moviein(20);
+for i = 1:20
+    % 改变视点
+   view(-37.5+24*(i-1),30);
+    % 将图形保存到M矩阵
+   M(i) = getframe;
+end
+% 播放画面2次
+movie(M,2);

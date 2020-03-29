@@ -1,0 +1,8 @@
+for i=2^16-1:-1:0
+    dec2bin(i)
+    input("")
+    for j=1:16
+        bitget(i,j)
+    end
+    input("")
+end

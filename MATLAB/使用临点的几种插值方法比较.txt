@@ -1,0 +1,41 @@
+A=100;
+B=0;
+C=0;
+D=0;
+[a,b]=meshgrid(-1:0.01:1,-1:0.01:1);
+
+for i = 1:2
+
+c=(abs(a-1).^i+abs(b-1).^i).^(1/i);
+d=(abs(a-1).^i+abs(b+1).^i).^(1/i);
+e=(abs(a+1).^i+abs(b-1).^i).^(1/i);
+f=(abs(a+1).^i+abs(b+1).^i).^(1/i);
+
+c(end,end)=0.000001;
+d(1,end)=0.000001;
+e(end,1)=0.000001;
+f(1,1)=0.000001;
+
+g=(A.*(1./c)+B.*(1./d)+C.*(1./e)+D.*(1./f))./...
+    (1./c+1./d+1./e+1./f);
+mesh(a,b,g)
+hold on
+
+end
+
+f=( abs(a-1).* abs(b-1));
+e=( abs(a-1).* abs(b+1));
+d=( abs(a+1).* abs(b-1));
+c=( abs(a+1).* abs(b+1));
+g=(A.*c+B.*d+C.*e+D.*f)./...
+    (c+d+e+f);
+mesh(a,b,g)
+hold on
+
+f=( abs(a-1) + abs(b-1));
+e=( abs(a-1) + abs(b+1));
+d=( abs(a+1) + abs(b-1));
+c=( abs(a+1) + abs(b+1));
+g=(A.*c+B.*d+C.*e+D.*f)./...
+    (c+d+e+f);
+mesh(a,b,g)
